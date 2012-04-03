@@ -197,31 +197,38 @@
         </div>
 
         <div>
-            <video id="live_video" autoplay></video>
-               <script type="text/javascript">
-                   video = document.getElementById("live_video")
-                   navigator.webkitGetUserMedia("video,audio", getStream, noStream);
-                   function getStream(stream) {
-
-                       video.src = window.webkitURL.createObjectURL(stream)
-                   }
-
-                   function noStream() {
-                       document.write("Unable to get video stream!")
-                   }
-               </script>
-               <canvas id="photo">  </canvas>
-               <p><button id="btn_cheese">Say Cheese</button></p>
-               <script>
-                   $("#btn_cheese").click(function () {
-                       //Get a snapshop
-                       alert("hello");
-                       canvas.getContext('2d').drawImage(video, 0, 0);
-
-                   });
-               </script>
-
+            <video id="self_view"  width="320" height="240" autoplay controls></video>
+            <video id="peer_view"  width="320" height="240" autoplay controls></video>
         </div>
+        <p><button id="btn_chat" onclick="startChat();">Start Chat</button></p>
+
+
+          <script type="text/javascript">
+                 video = document.getElementById("self_view")
+                 navigator.webkitGetUserMedia("video,audio", getStream, noStream);
+                 function getStream(stream) {
+
+                     video.src = window.webkitURL.createObjectURL(stream);
+                     Signaling.Peer.addStream(stream)
+                 }
+
+                 function noStream() {
+                     document.write("Unable to get video stream!")
+                 }
+
+                 function startChat(){
+
+                    Signaling.Peer.onaddstream = receiveVideoStream
+
+                 }
+
+                 function receiveVideoStream(e) {
+                     peerView.src = webkitURL.createObjectURL(e.stream);
+                 }
+          </script>
+
+
+
       
       </div>
 
