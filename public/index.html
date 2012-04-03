@@ -205,26 +205,32 @@
 
           <script type="text/javascript">
                  video = document.getElementById("self_view")
-                 navigator.webkitGetUserMedia("video,audio", getStream, noStream);
-                 function getStream(stream) {
+                 var local;
 
-                     video.src = window.webkitURL.createObjectURL(stream);
-                     Signaling.Peer.addStream(stream)
-                 }
+
 
                  function noStream() {
                      document.write("Unable to get video stream!")
                  }
 
                  function startChat(){
-
-                    Signaling.Peer.onaddstream = receiveVideoStream
-
+                    navigator.webkitGetUserMedia("video,audio", getStream, noStream);
+                      function getStream(stream) {
+                          video.src = window.webkitURL.createObjectURL(stream);
+                          local = new PeerConnection('TURNS webrtc-test.heroku.com', sendSignal);
+                          local.addStream(stream);
+                      }
                  }
 
-                 function receiveVideoStream(e) {
-                     peerView.src = webkitURL.createObjectURL(e.stream);
+                 function sendSignal(message){
+
+                       local.send(message)
                  }
+
+                 local.onaddstream = function (event) {
+                   // (videoElement is some <video> element)
+                   peer_view.src = window.webkitURL.createObjectURL(event.stream);
+                 };
           </script>
 
 
