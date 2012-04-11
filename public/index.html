@@ -256,12 +256,13 @@
 
              function startShowingStream(streamEvent){
 
-                 peer_video.src = webkitURL.createObjectURL(streamEvent.stream);
+                 peer_video.src = window.webkitURL.createObjectURL(streamEvent.stream);
              }
 
-             function signallingCallback(message){
+             function signallingCallback(message,source){
                  //alert(message);
-                 peerConnection.send(message);
+                 peerConnection.processSignallingMessage(message);
+                 //peerConnection.send(message);
              }
 
           </script>
