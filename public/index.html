@@ -230,7 +230,7 @@
                }
                peerConnection.onmessage = incomingCall;
                peerConnection.onopen = indicateConnected;
-               //peerConnection.onaddstream = startShowingStream;
+               peerConnection.onaddstream = startShowingStream;
 
              }
 
@@ -239,8 +239,9 @@
              }
 
              function incomingCall(signal){
+                 alert(signal);
                  createPeerConnection();
-                 startShowingStream();
+
              }
 
              function startChat(){
@@ -248,6 +249,7 @@
                   function getStream(stream) {
                       self_video.src = window.webkitURL.createObjectURL(stream);
                       createPeerConnection();
+                      peerConnection.open();
                       peerConnection.addStream(stream);
                   }
              }
