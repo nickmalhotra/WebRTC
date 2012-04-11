@@ -202,6 +202,7 @@
         </div>
 
          <input type="button" value="Connect" onclick="connect()" id="connectBtn">
+          <textarea id="status" style="width:600pt;height:200pt"></textarea>
 
 
           <script type="text/javascript">
@@ -214,7 +215,11 @@
               peer_video = document.getElementById("peer_view");
 
 
+             function reportStatus(val){
+                 var txt = document.getElementById("status");
+                 txt.textContent +=   val + "\n";
 
+             }
 
              function noStream() {
                  document.write("Unable to get video stream!")
@@ -224,6 +229,8 @@
 
                try{
                 peerConnection = new webkitDeprecatedPeerConnection('STUN stun.l.google.com:19302', signallingCallback);
+                reportStatus("Peer connection created with google STUN server..." )
+                peerConnection.onaddstream = startShowingStream;
 
                }
                catch(e){
@@ -231,15 +238,7 @@
                     alert("cannot make peer connection" + e)
                }
 
-               peerConnection.onopen = indicateConnected;
-               peerConnection.onaddstream = startShowingStream;
-
              }
-
-             function indicateConnected(){
-                 alert("Peer connection opened");
-             }
-
 
              function initialize(){
                 createPeerConnection();
@@ -249,6 +248,7 @@
              function connect(){
                  try{
                     peerConnection.addStream(local_stream);
+
                  }
                  catch(e)
                  {
@@ -259,11 +259,12 @@
               function getStream(stream) {
                     local_stream = stream ;
                     self_video.src = window.webkitURL.createObjectURL(local_stream);
-
+                    reportStatus("Local video turned on....");
               }
 
              function startShowingStream(streamEvent){
                  try{
+                    reportStatus("Stream event received from peer...");
                     peer_video.src = window.webkitURL.createObjectURL(streamEvent.stream);
                  }
                  catch(e){
@@ -273,7 +274,7 @@
              }
 
              function signallingCallback(message,source){
-
+                 reportStatus("Message received...." + message)
                  peerConnection.processSignalingMessage(message);
                  //peerConnection.send(message);
              }

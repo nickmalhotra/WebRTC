@@ -25,7 +25,7 @@
       <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="259" column="20" selection-start="6035" selection-end="6035" vertical-scroll-proportion="0.08390411">
+            <state line="276" column="62" selection-start="6859" selection-end="6859" vertical-scroll-proportion="0.80479455">
               <folding />
             </state>
           </provider>
@@ -423,7 +423,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1296" height="786" extended-state="6" />
+    <frame x="-8" y="-8" width="1296" height="786" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -557,7 +557,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="259" column="20" selection-start="6035" selection-end="6035" vertical-scroll-proportion="0.08390411">
+        <state line="276" column="62" selection-start="6859" selection-end="6859" vertical-scroll-proportion="0.80479455">
           <folding />
         </state>
       </provider>
