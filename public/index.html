@@ -59,7 +59,7 @@
 
 
       #header {
-        background-image: url("/assets/rails.png");
+        background-image: url("../../assets/images/rails.png");
         background-repeat: no-repeat;
         background-position: top left;
         height: 64px;
@@ -204,40 +204,59 @@
 
 
           <script type="text/javascript">
-                 video = document.getElementById("self_view")
-                 var local;
+              var peerConnection;
+              var self_video;
+              var peer_video;
+
+              self_video = document.getElementById("self_view");
+              peer_video = document.getElementById("peer_view");
 
 
 
-                 function noStream() {
-                     document.write("Unable to get video stream!")
-                 }
 
-                 function startChat(){
-                    navigator.webkitGetUserMedia("video,audio", getStream, noStream);
-                      function getStream(stream) {
-                          video.src = window.webkitURL.createObjectURL(stream);
-                          local = new PeerConnection('TURNS webrtc-test.heroku.com', sendSignal);
-                          local.addStream(stream);
-                      }
-                 }
+             function noStream() {
+                 document.write("Unable to get video stream!")
+             }
 
-                 function sendSignal(message){
+             function createPeerConnection(){
 
-                       local.send(message)
-                 }
+               try{
+                peerConnection = new webkitDeprecatedPeerConnection('STUN stun.l.google.com:19302', signallingCallback);
 
-                 local.onaddstream = function (event) {
-                   // (videoElement is some <video> element)
-                   peer_view.src = window.webkitURL.createObjectURL(event.stream);
-                 };
+               }
+               catch(e){
+
+                    alert("cannot make peer connection" + e)
+               }
+               peerConnection.onopen = indicateConnected;
+               peerConnection.onaddstream = startShowingStream;
+
+             }
+
+             function indicateConnected(){
+                 alert("Peer connection opened");
+             }
+
+             function startChat(){
+                navigator.webkitGetUserMedia("video,audio", getStream, noStream);
+                  function getStream(stream) {
+                      self_video.src = window.webkitURL.createObjectURL(stream);
+                      createPeerConnection();
+                  }
+             }
+
+             function startShowingStream(streamEvent){
+
+                 peer_video.src = webkitURL.createObjectURL(streamEvent.stream);
+
+
+             }
+             function signallingCallback(message){
+                 peerConnection.send(message);
+             }
+
           </script>
-
-
-
-      
       </div>
-
       <div id="footer">&nbsp;</div>
     </div>
   </body>
