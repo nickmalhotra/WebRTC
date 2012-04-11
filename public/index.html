@@ -186,7 +186,7 @@
     </script>
     <script type="text/javascript" src=jquery-1.7.1.min.js></script>
   </head>
-  <body>
+  <body onload="initialize()">
     <div id="page">
       
 
@@ -200,7 +200,8 @@
             <video id="self_view"  width="320" height="240" autoplay controls></video>
             <video id="peer_view"  width="320" height="240" autoplay controls></video>
         </div>
-        <p><button id="btn_chat" onclick="startChat();">Start Chat</button></p>
+
+         <input type="button" value="Connect" onclick="connect()" id="connectBtn">
 
 
           <script type="text/javascript">
@@ -228,7 +229,7 @@
 
                     alert("cannot make peer connection" + e)
                }
-               peerConnection.onmessage = incomingCall;
+
                peerConnection.onopen = indicateConnected;
                peerConnection.onaddstream = startShowingStream;
 
@@ -238,21 +239,20 @@
                  alert("Peer connection opened");
              }
 
-             function incomingCall(signal){
-                 alert(signal);
-                 createPeerConnection();
 
-             }
-
-             function startChat(){
+             function initialize(){
+                createPeerConnection();
                 navigator.webkitGetUserMedia("video,audio", getStream, noStream);
-                  function getStream(stream) {
-                      self_video.src = window.webkitURL.createObjectURL(stream);
-                      createPeerConnection();
-                      peerConnection.open();
-                      peerConnection.addStream(stream);
-                  }
              }
+
+             function connect(){
+                 peerConnection.addStream(stream);
+             }
+
+              function getStream(stream) {
+                    self_video.src = window.webkitURL.createObjectURL(stream);
+
+              }
 
              function startShowingStream(streamEvent){
 
