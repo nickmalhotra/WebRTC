@@ -242,6 +242,7 @@
                   function getStream(stream) {
                       self_video.src = window.webkitURL.createObjectURL(stream);
                       createPeerConnection();
+                      peerConnection.addStream(stream);
                   }
              }
 
@@ -251,7 +252,9 @@
 
 
              }
+
              function signallingCallback(message){
+                 alert(message);
                  peerConnection.send(message);
              }
 
