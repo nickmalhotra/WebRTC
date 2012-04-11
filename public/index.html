@@ -246,6 +246,7 @@
              }
 
              function connect(){
+
                  peerConnection.addStream(stream);
              }
 
@@ -260,8 +261,8 @@
              }
 
              function signallingCallback(message,source){
-                 //alert(message);
-                 peerConnection.processSignallingMessage(message);
+
+                 peerConnection.processSignalingMessage(message);
                  //peerConnection.send(message);
              }
 
