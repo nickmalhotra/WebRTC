@@ -228,13 +228,19 @@
 
                     alert("cannot make peer connection" + e)
                }
+               peerConnection.onmessage = incomingCall;
                peerConnection.onopen = indicateConnected;
-               peerConnection.onaddstream = startShowingStream;
+               //peerConnection.onaddstream = startShowingStream;
 
              }
 
              function indicateConnected(){
                  alert("Peer connection opened");
+             }
+
+             function incomingCall(signal){
+                 createPeerConnection();
+                 startShowingStream();
              }
 
              function startChat(){
@@ -249,12 +255,10 @@
              function startShowingStream(streamEvent){
 
                  peer_video.src = webkitURL.createObjectURL(streamEvent.stream);
-
-
              }
 
              function signallingCallback(message){
-                 alert(message);
+                 //alert(message);
                  peerConnection.send(message);
              }
 
