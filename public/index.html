@@ -208,6 +208,7 @@
               var peerConnection;
               var self_video;
               var peer_video;
+              var local_stream;
 
               self_video = document.getElementById("self_view");
               peer_video = document.getElementById("peer_view");
@@ -242,22 +243,33 @@
 
              function initialize(){
                 createPeerConnection();
-                navigator.webkitGetUserMedia("video,audio", getStream, noStream);
+                navigator.webkitGetUserMedia("video", getStream, noStream);
              }
 
              function connect(){
-
-                 peerConnection.addStream(stream);
+                 try{
+                    peerConnection.addStream(local_stream);
+                 }
+                 catch(e)
+                 {
+                     alert("Cannot add stream " + e)
+                 }
              }
 
               function getStream(stream) {
-                    self_video.src = window.webkitURL.createObjectURL(stream);
+                    local_stream = stream ;
+                    self_video.src = window.webkitURL.createObjectURL(local_stream);
 
               }
 
              function startShowingStream(streamEvent){
+                 try{
+                    peer_video.src = window.webkitURL.createObjectURL(streamEvent.stream);
+                 }
+                 catch(e){
 
-                 peer_video.src = window.webkitURL.createObjectURL(streamEvent.stream);
+                     alert(e);
+                 }
              }
 
              function signallingCallback(message,source){
